@@ -1,0 +1,162 @@
+;; name: Colin Reilly
+;; Time spent on assignment: 
+;; Collaborators: Colin Reilly
+
+(define abs (n) (if (< n 0) (* -1 n) n))
+(define min (a b) (if (< a b) a b))
+(define max (a b) (if (> a b) a b))
+(define gcd (m n)
+  (if (or (< m 0) (< n 0))
+      (gcd (max m (* -1 m)) (max n (* -1 n)))
+      (if (= n 0)
+          m
+          (gcd n (mod m n)))))
+
+;; A (Exercise 4)
+;; DEFINE sigma HERE
+( define sigma ( m n )
+    ( sigma_help m n 0 )
+)
+
+( define sigma_help ( m n add )
+    ( if ( > n 0 )
+        ( begin 
+            ( set m ( + m add ))
+            ( set n ( - n 1 ))
+            ( set add ( + add 1 ))
+            ( sigma_help m n add)
+        )
+        m
+    )
+)
+
+;; B.a (Exercise 5a)
+;; DEFINE exp HERE
+
+;; B.b (Exercise 5b)
+;; DEFINE log HERE
+
+;; C (Exercise 6)
+;; DEFINE choose HERE
+( define choose ( n k )
+    ( if ( = n k )
+        1
+        ( if ( = k 0 )
+            1
+            ( + ( choose ( - n 1 ) k ) ( choose ( - n 1 ) ( - k 1 )))    
+        )
+    )
+)
+
+;; D (Exercise 7)
+;; DEFINE fib HERE
+( define fib ( n )
+    ( if ( = n 0 ) 
+        0
+        ( if ( = n 1 )
+            1
+            ( + ( fib ( - n 1 )) ( fib ( - n 2 )))
+        )
+    )
+)
+
+;; E.a (Exercise 8a)
+;; DEFINE prime? HERE
+( define prime? ( n )
+    ( prime?_help n ( - n 1 ))
+)
+
+( define prime?_help ( n m )
+    ( if ( = m 1 ) 
+        1
+        ( if ( = n ( * ( / n m ) m)) 
+            0
+            ( prime?_help n ( - m 1 ))
+        )
+    )
+)
+
+;; E.b (Exercise 8b)
+;; DEFINE nthprime HERE
+( define nthprime ( n )
+   ( nthprime_help n 1 ) 
+)
+
+( define nthprime_help ( n curr )
+    ( if ( = n 0 )
+        curr
+        ( begin 
+            ( set curr ( + curr 1 ))
+            ( if ( = ( prime? curr ) 1 )
+                ( nthprime_help ( - n 1 ) curr )
+                ( nthprime_help n curr )
+            )
+        )
+    )
+)
+
+;; E.c (Exercise 8c)
+;; DEFINE sumprimes HERE
+( define sumprimes ( n )
+    ( if ( = n 0 )
+        0
+        ( + ( nthprime n ) ( sumprimes ( - n 1 )))
+    )
+)
+
+;; E.d (Exercise 8d)
+;; DEFINE relprime? HERE
+( define relprime? ( m n )
+    ( if ( = (gcd m n ) 1 )
+        1
+        0
+    )
+)
+
+;; F.a (Exercise 9a)
+;; DEFINE given-positive-all-fours? HERE
+( define given-positive-all-fours? ( n )
+    ( gpaf?_help n 4 )
+)
+
+( define gpaf?_help ( n check )
+    ( if ( = check n )
+        1
+        ( if ( < n check )
+            0
+            ( gpaf?_help n ( + 4 ( * 10 check )))
+        )
+    )
+)
+
+( check-expect ( given-positive-all-fours? 444 ) 1)
+( check-expect ( given-positive-all-fours? 443 ) 0)
+
+;; F.b (Exercise 9b)
+;; DEFINE all-fours? HERE
+( define all-fours? ( n ) 
+    ( given-positive-all-fours? n )
+)
+
+( check-expect ( all-fours? -4 )  0)
+( check-expect ( all-fours? -444) 0)
+( check-expect ( all-fours? 444)  1)
+( check-expect ( all-fours? 443)  0)
+
+;; F.c (Exercise 9c)
+;; DEFINE all-one-digit? HERE
+
+;; F.d (Exercise 9d)
+;; DEFINE increasing-digits? HERE
+
+;; G (Exercise 10)
+;; DEFINE binary HERE
+
+;; H
+;; DEFINE aliquot-class HERE
+
+;; Ia
+;; DEFINE hailstone-length HERE
+
+;; Ib
+;; DEFINE hailstone-max HERE
