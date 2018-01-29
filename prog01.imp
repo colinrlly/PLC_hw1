@@ -35,22 +35,15 @@
 ( define exp ( b n )
     ( if ( = n 0 )
         1
-        ( exp b ( - n 1 ))
+        ( * b ( exp b ( - n 1 )))
     )
 )
 
-( check-expect ( 2 0 ) 1 )
-( check-expect ( 2 3 ) 8 )
+( check-expect ( exp 2 0 ) 1 )
+( check-expect ( exp 2 3 ) 8 )
 
 ;; B.b (Exercise 5b)
 ;; DEFINE log HERE
-( define log ( b m )
-    ( log_help b m 0 )
-)
-
-( define log_help ( b m n )
-    
-)
 
 ;; C (Exercise 6)
 ;; DEFINE choose HERE
@@ -161,53 +154,10 @@
 
 ;; F.c (Exercise 9c)
 ;; DEFINE all-one-digit? HERE
-( define all-one-digit? ( n ) 
-    ( aod?_help n ( get-one-digit n ) ( get-one-digit n ))
-)
-
-( define aod?_help ( n digit check )
-    ( if ( = check n )
-        1
-        ( if ( || ( && ( < n 0 ) ( > n check ) ) ( && ( > n 0 ) ( < n check )))
-            0
-            ( aod?_help n digit ( + digit ( * 10 check )))
-        )
-    )
-)
-
-( define get-one-digit ( n ) 
-    ( if ( && ( < n 10 ) ( > n -10 ))
-        n
-        ( get-one-digit ( / n 10 ))
-    )
-)
-
-( check-expect ( all-one-digit? -4343 ) 0)
-( check-expect ( all-one-digit? 2222 )  1)
-( check-expect ( all-one-digit? 0 ) 1)
 
 
 ;; F.d (Exercise 9d)
 ;; DEFINE increasing-digits? HERE
-( define increasing-digits? ( n )
-    ( id?_help n ( get-one-digit n ) ( get-one-digit n ))
-)
-
-( define id?_help ( n digit check )
-    ( if ( = check n )
-        1
-        ( if ( || ( && ( < n 0 ) ( > n check ) ) ( && ( > n 0 ) ( < n check )))
-            0
-            ( id?_help n ( + digit ( if ( > n 0 ) 1 -1 )) ( + ( + digit ( if ( > n 0 ) 1 -1 ) ) ( * 10 check )))
-        )
-    )
-)
-
-( check-expect ( increasing-digits? 1234 ) 1)
-( check-expect ( increasing-digits? -1234 ) 1)
-( check-expect ( increasing-digits? 0 ) 1)
-( check-expect ( increasing-digits? 124 ) 0)
-( check-expect ( increasing-digits? 323 ) 0)
 
 ;; G (Exercise 10)
 ;; DEFINE binary HERE
