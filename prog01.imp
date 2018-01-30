@@ -39,12 +39,18 @@
     )
 )
 
-( check-expect ( exp 2 0 ) 1 )
-( check-expect ( exp 2 3 ) 8 )
-
 ;; B.b (Exercise 5b)
 ;; DEFINE log HERE
+( define log ( b m )
+    ( log_help b m 0 )
+)
 
+( define log_help ( b m n )
+    ( if ( > ( exp b ( + n 1 )) m )
+        n
+        ( log_help b m ( + n 1 ))
+    )
+)
 
 ;; C (Exercise 6)
 ;; DEFINE choose HERE
@@ -139,19 +145,11 @@
     )
 )
 
-( check-expect ( given-positive-all-fours? 444 ) 1)
-( check-expect ( given-positive-all-fours? 443 ) 0)
-
 ;; F.b (Exercise 9b)
 ;; DEFINE all-fours? HERE
 ( define all-fours? ( n ) 
     ( given-positive-all-fours? n )
 )
-
-( check-expect ( all-fours? -4 )  0)
-( check-expect ( all-fours? -444) 0)
-( check-expect ( all-fours? 444)  1)
-( check-expect ( all-fours? 443)  0)
 
 ;; F.c (Exercise 9c)
 ;; DEFINE all-one-digit? HERE
@@ -176,10 +174,6 @@
     )
 )
 
-( check-expect ( all-one-digit? -4343 ) 0)
-( check-expect ( all-one-digit? 2222 )  1)
-( check-expect ( all-one-digit? 0 ) 1)
-
 ;; F.d (Exercise 9d)
 ;; DEFINE increasing-digits? HERE
 ( define increasing-digits? ( n )
@@ -196,15 +190,21 @@
     )
 )
 
-( check-expect ( increasing-digits? 1234 ) 1)
-( check-expect ( increasing-digits? -1234 ) 1)
-( check-expect ( increasing-digits? 0 ) 1)
-( check-expect ( increasing-digits? 124 ) 0)
-( check-expect ( increasing-digits? 323 ) 0)
-
-
 ;; G (Exercise 10)
 ;; DEFINE binary HERE
+( define binary ( n )
+    ( if ( > n 0 ) 
+        ( binary_help n 1 0 )
+        ( - 0 ( binary_help ( - 0 n ) 1 0))
+    )
+)
+
+( define binary_help ( n i m )
+    ( if ( > n 0 )
+        ( binary_help ( / n 2 ) ( * i 10 ) ( + m ( * i ( mod n 2 ))))
+        m
+    )
+)
 
 ;; H
 ;; DEFINE aliquot-class HERE
@@ -228,10 +228,6 @@
     )
 )
 
-( check-expect ( aliquot-class 20 ) 1 )
-( check-expect ( aliquot-class 19 ) -1 )
-( check-expect ( aliquot-class 6 ) 0 )
-
 ;; Ia
 ;; DEFINE hailstone-length HERE
 ( define hailstone-length ( n )
@@ -244,15 +240,25 @@
     )
 )
 
-( hailstone-length 21 )
-( check-expect ( hailstone-length 21 ) 7 )
-( check-expect ( hailstone-length 47 ) 104 )
-
 ;; Ib
 ;; DEFINE hailstone-max HERE
 ( define hailstone-max ( n )
-    ( if ( = 1 ( mod n 2 ))
-        n
-        ( + ( * n 3 ) 1 )
+    ( hm_help n 0 )
+)
+
+( define hm_help ( n c ) 
+    ( if ( = n 1 )
+        c
+        ( if ( = ( mod n 2 ) 0 )
+            ( if ( < c n ) 
+                ( hm_help ( / n 2 ) n )
+                ( hm_help ( / n 2 ) c )
+            )
+            ( if ( < c n )
+                ( hm_help ( + ( * n 3 ) 1 ) n )
+                ( hm_help ( + ( * n 3 ) 1 ) c )
+            )
+        )
     )
 )
+
